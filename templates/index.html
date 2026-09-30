@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HaloTani - Pertanian Cerdas Indonesia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/script.js" defer></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <span class="logo-text">HaloTani</span>
+                <span class="tagline">Pertanian Cerdas Indonesia</span>
+            </div>
+            <button class="hamburger-menu" id="hamburger-btn" aria-label="Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
+            </button>
+            <ul class="nav-links" id="mobile-nav-menu">
+                <li><a href="#" data-page="dashboard" class="nav-link active">Dashboard</a></li>
+                <li><a href="#" data-page="detect" class="nav-link">Deteksi Tanaman</a></li>
+                <li><a href="#" data-page="chat" class="nav-link">Dokter Tani</a></li>
+                <li><a href="#" data-page="market" class="nav-link">Katalog Produk</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page: Dashboard -->
+    <div id="page-dashboard" class="page-container page-active">
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">Selamat Datang di HaloTani</h1>
+                <p class="hero-subtitle">Platform Diagnostik & Konsultasi Pertanian Organik Berbasis Kecerdasan Buatan</p>
+                <div class="hero-actions">
+                    <button class="btn btn-accent" data-page="detect">Mulai Deteksi Tanaman</button>
+                    <button class="btn btn-outline" data-page="chat">Konsultasi Dokter Tani</button>
+                </div>
+            </div>
+            <div class="hero-illustration">
+                <div class="illustration-graphic"><img src="static/images/farm.jpg" alt=""></div>
+            </div>
+        </section>
+
+        <section class="stats-section">
+            <div class="stat-card">
+                <div class="stat-value">98%</div>
+                <div class="stat-label">Akurasi Deteksi</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">50+</div>
+                <div class="stat-label">Produk Organik</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">24/7</div>
+                <div class="stat-label">Konsultasi AI</div>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <div class="feature-card">
+                <div class="feature-icon bg-green">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                </div>
+                <h3>Deteksi Hama & Penyakit</h3>
+                <p>Identifikasi masalah tanaman Anda secara instan menggunakan kamera pintar kami.</p>
+                <a href="#" data-page="detect" class="feature-link">Mulai &rarr;</a>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon bg-yellow">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </div>
+                <h3>Konsultasi Dokter Tani</h3>
+                <p>Dapatkan saran ahli untuk budidaya organik dan penanganan hama dari asisten AI kami.</p>
+                <a href="#" data-page="chat" class="feature-link">Mulai &rarr;</a>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon bg-green">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                </div>
+                <h3>Katalog Produk Organik</h3>
+                <p>Temukan produk pertanian organik terbaik, dari pupuk hingga biopestisida alami.</p>
+                <a href="#" data-page="market" class="feature-link">Mulai &rarr;</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Page: Detect -->
+    <div id="page-detect" class="page-container">
+        <div class="detect-layout">
+            <div class="detect-left">
+                <div class="detect-tabs">
+                    <button class="detect-tab active" id="tab-kamera">Kamera</button>
+                    <button class="detect-tab" id="tab-unggah">Unggah Foto</button>
+                </div>
+                
+                <div class="camera-container">
+                    <div id="camera-zone" class="camera-zone">
+                        <div class="viewfinder-corners"></div>
+                        <video id="cameraFeed" autoplay playsinline></video>
+                        <canvas id="captureCanvas"></canvas>
+                        <img id="captured-preview" style="display: none;" alt="Captured preview">
+                        <div class="camera-overlay" id="detect-loading" style="display: none;">
+                            <div class="spinner"></div>
+                            <p>Menganalisis dengan AI...</p>
+                        </div>
+                        <div class="camera-label">Kamera Aktif - Arahkan ke Tanaman</div>
+                    </div>
+
+                    <div class="camera-controls">
+                        <button class="btn btn-primary" id="btn-start-camera">Aktifkan Kamera</button>
+                        <button class="btn btn-accent" id="btn-capture" disabled>Ambil Gambar</button>
+                        <div class="upload-section">
+                            <span class="upload-label">Atau unggah foto:</span>
+                            <label class="btn-file-upload">
+                                Pilih File
+                                <input type="file" id="image-file-input" accept="image/*" style="display:none;">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="action-controls" id="post-capture-controls" style="display: none;">
+                        <button class="btn btn-accent" id="btn-analyze">Analisis Sekarang</button>
+                        <button class="btn btn-outline" id="btn-retake">Ambil Ulang</button>
+                    </div>
+
+                    <div id="detect-error" class="detect-error-box" style="display: none;"></div>
+                </div>
+            </div>
+
+            <div class="detect-right">
+                <!-- Empty State -->
+                <div class="result-empty-state" id="result-empty-state">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                    <p>Hasil deteksi akan tampil di sini</p>
+                </div>
+
+                <!-- Result State -->
+                <div class="result-panel" id="detect-result-panel" style="display: none;">
+                    <img id="result-image" class="result-annotated-img" alt="Annotated result">
+
+                    <div class="result-section">
+                        <h4>Hasil Deteksi</h4>
+                        <div id="detection-classes" class="detection-classes">
+                        </div>
+                    </div>
+
+                    <div class="result-section">
+                        <h4>Rekomendasi Penanganan</h4>
+                        <div class="recommendation-box" id="recommendation-text">
+                        </div>
+                    </div>
+
+                    <div class="result-section">
+                        <h4>Produk yang Direkomendasikan</h4>
+                        <div id="detect-recommended-products" class="recommended-products-grid">
+                        </div>
+                    </div>
+
+                    <div class="result-actions">
+                        <button class="btn btn-primary" data-page="market">Beli di Katalog</button>
+                        <button class="btn btn-outline" data-page="chat">Tanya Dokter Tani</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page: Chat -->
+    <div id="page-chat" class="page-container">
+        <div class="chat-layout">
+            <div class="chat-sidebar">
+                <div class="sidebar-header">
+                    <h2>Dokter Tani</h2>
+                    <p>Konsultan Pertanian Organik Berbasis AI</p>
+                </div>
+                <div class="sidebar-info-box">
+                    Dokter Tani siap menjawab pertanyaan seputar hama, penyakit, pemupukan, dan teknik budidaya organik.
+                </div>
+                <div class="sidebar-footer">
+                    Didukung oleh Google Gemini AI
+                </div>
+            </div>
+            <div class="chat-main">
+                <div class="chat-header">
+                    <h3>Sesi Konsultasi</h3>
+                    <button class="btn-clear-chat" id="btn-clear-chat">Bersihkan Percakapan</button>
+                </div>
+                <div id="chat-messages" class="chat-messages">
+                    <!-- Typing indicator di dalam chat-messages agar insertBefore bekerja -->
+                    <div class="typing-indicator" id="typing-indicator" style="display: none;">
+                        Dokter Tani sedang menyusun jawaban<span class="dots">...</span>
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <div class="quick-questions" id="quick-questions-container">
+                        <button class="btn-quick-question" data-prompt="Cara membuat pestisida nabati?">Cara membuat pestisida nabati?</button>
+                        <button class="btn-quick-question" data-prompt="Pupuk organik untuk cabai?">Pupuk organik untuk cabai?</button>
+                        <button class="btn-quick-question" data-prompt="Mengatasi busuk akar?">Mengatasi busuk akar?</button>
+                        <button class="btn-quick-question" data-prompt="Dosis Trichoderma harzianum?">Dosis Trichoderma harzianum?</button>
+                    </div>
+                    <div class="input-wrapper">
+                        <textarea id="chat-input" placeholder="Ketik pertanyaan Anda di sini..."></textarea>
+                        <button id="btn-chat-send" class="btn btn-accent">Kirim</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page: Market -->
+    <div id="page-market" class="page-container">
+        <div class="market-header">
+            <h2>Katalog Produk Organik</h2>
+            <p>Sarana pertanian organik berkualitas untuk petani modern</p>
+        </div>
+        
+        <div class="market-filters">
+            <div class="filter-scroll">
+                <button class="filter-pill active" data-category="Semua">Semua</button>
+                <button class="filter-pill" data-category="Pupuk Organik Padat">Pupuk Organik Padat</button>
+                <button class="filter-pill" data-category="Pupuk Organik Cair">Pupuk Organik Cair</button>
+                <button class="filter-pill" data-category="Agen Hayati">Agen Hayati</button>
+                <button class="filter-pill" data-category="Biopestisida">Biopestisida</button>
+                <button class="filter-pill" data-category="Pembenah Tanah">Pembenah Tanah</button>
+                <button class="filter-pill">Alat & Kebutuhan</button>
+            </div>
+        </div>
+
+        <div class="product-grid" id="product-grid">
+            <!-- Products injected via JS -->
+        </div>
+    </div>
+
+    <script>
+    window.PRODUCTS = [
+        {id: 1, name: 'Pupuk Kascing (Bekas Cacing) Premium', category: 'Pupuk Organik Padat', benefit: 'Memperbaiki struktur tanah dan merangsang pertumbuhan akar', price: 15000, priceUnit: 'kg'},
+        {id: 2, name: 'POC Urine Kelinci Fermentasi', category: 'Pupuk Organik Cair', benefit: 'Sumber Nitrogen (N) tinggi untuk fase vegetatif daun', price: 35000, priceUnit: 'liter'},
+        {id: 3, name: 'Trichoderma harzianum (Serbuk)', category: 'Agen Hayati', benefit: 'Mencegah penyakit layu fusarium dan jamur akar', price: 45000, priceUnit: '500g'},
+        {id: 4, name: 'Minyak Mimba (Neem Oil) Murni', category: 'Biopestisida', benefit: 'Mengendalikan hama kutu daun, thrips, dan tungau', price: 55000, priceUnit: '250ml'},
+        {id: 5, name: 'EM4 Pertanian (Botol Kuning)', category: 'Dekomposer/Mikroba', benefit: 'Mempercepat fermentasi kompos dan menyuburkan tanah', price: 25000, priceUnit: 'liter'},
+        {id: 6, name: 'Pupuk Kandang Kambing Fermentasi', category: 'Pupuk Organik Padat', benefit: 'Menambah unsur hara makro dan memperbaiki porositas tanah', price: 20000, priceUnit: 'karung'},
+        {id: 7, name: 'Asap Cair (Liquid Smoke) Grade C', category: 'Biopestisida', benefit: 'Mengusir hama serangga dan menekan pertumbuhan jamur', price: 30000, priceUnit: 'liter'},
+        {id: 8, name: 'PGPR (Plant Growth Promoting Rhizobacteria)', category: 'Agen Hayati', benefit: 'Memacu hormon pertumbuhan dan kekebalan tanaman', price: 40000, priceUnit: 'liter'},
+        {id: 9, name: 'POC Bonggol Pisang', category: 'Pupuk Organik Cair', benefit: 'Sumber Kalium (K) organik untuk fase pembuahan', price: 25000, priceUnit: 'liter'},
+        {id: 10, name: 'Bokashi Kotoran Sapi & Sekam', category: 'Pupuk Organik Padat', benefit: 'Memulihkan mikrobioma tanah yang rusak akibat bahan kimia', price: 25000, priceUnit: 'karung'},
+        {id: 11, name: 'Pestisida Nabati Ekstrak Tembakau', category: 'Biopestisida', benefit: 'Membasmi ulat grayak dan serangga penghisap getah', price: 35000, priceUnit: '500ml'},
+        {id: 12, name: 'Mikoriza (Cendawan Simbiosis)', category: 'Agen Hayati', benefit: 'Memperluas jangkauan akar dalam menyerap air dan fosfat', price: 50000, priceUnit: 'kg'},
+        {id: 13, name: 'Tepung Tulang (Bone Meal)', category: 'Pupuk Organik Padat', benefit: 'Sumber Fosfor (P) dan Kalsium (Ca) lambat urai', price: 30000, priceUnit: 'kg'},
+        {id: 14, name: 'POC Ekstrak Cangkang Telur', category: 'Pupuk Organik Cair', benefit: 'Mencegah rontok bunga dan busuk ujung buah (kalsium)', price: 20000, priceUnit: '500ml'},
+        {id: 15, name: 'Beauveria bassiana', category: 'Agen Hayati', benefit: 'Menginfeksi dan mematikan hama wereng serta walang sangit', price: 60000, priceUnit: '500g'},
+        {id: 16, name: 'Guano (Kotoran Kelelawar)', category: 'Pupuk Organik Padat', benefit: 'Kaya Fosfor dan Nitrogen untuk memacu pembungaan', price: 40000, priceUnit: 'kg'},
+        {id: 17, name: 'Pestisida Nabati Ekstrak Sereh Wangi', category: 'Biopestisida', benefit: 'Repelan lalat buah dan nyamuk kebun', price: 45000, priceUnit: '500ml'},
+        {id: 18, name: 'Molase (Tetes Tebu) Murni', category: 'Dekomposer/Mikroba', benefit: 'Makanan utama bakteri saat pembuatan pupuk kompos/POC', price: 15000, priceUnit: 'kg'},
+        {id: 19, name: 'Bacillus thuringiensis (Bt)', category: 'Agen Hayati', benefit: 'Membasmi ulat kubis dan larva ngengat secara biologis', price: 75000, priceUnit: '100g'},
+        {id: 20, name: 'POC Asam Amino Ikan', category: 'Pupuk Organik Cair', benefit: 'Mempercepat pemulihan tanaman kerdil atau stres cuaca', price: 50000, priceUnit: 'liter'},
+        {id: 21, name: 'Arang Sekam Bakar', category: 'Pembenah Tanah', benefit: 'Meningkatkan aerasi tanah dan menjaga kelembapan', price: 15000, priceUnit: 'karung'},
+        {id: 22, name: 'Pestisida Ekstrak Bawang Putih', category: 'Biopestisida', benefit: 'Mengendalikan nematoda bengkak akar dan jamur daun', price: 30000, priceUnit: '500ml'},
+        {id: 23, name: 'Cocopeat Halus (Sabut Kelapa)', category: 'Alat & Kebutuhan', benefit: 'Mengikat air dengan sangat baik untuk semai benih', price: 20000, priceUnit: 'karung'},
+        {id: 24, name: 'POC Sabut Kelapa (Tinggi Kalium)', category: 'Pupuk Organik Cair', benefit: 'Memperbesar ukuran buah dan mencegah kerontokan', price: 25000, priceUnit: 'liter'},
+        {id: 25, name: 'Metarhizium anisopliae', category: 'Agen Hayati', benefit: 'Mengendalikan hama uret/lundi di dalam tanah dan orong-orong', price: 65000, priceUnit: '500g'},
+        {id: 26, name: 'Dolomit (Kapur Pertanian)', category: 'Pembenah Tanah', benefit: 'Menetralkan pH tanah asam (drop) setelah hujan lebat', price: 15000, priceUnit: 'karung'},
+        {id: 27, name: 'Perangkap Hama Kuning (Yellow Sticky Trap)', category: 'Alat & Kebutuhan', benefit: 'Menarik dan menjebak lalat buah, kutu kebul, dan thrips', price: 3000, priceUnit: 'lembar'},
+        {id: 28, name: 'Ekstrak Daun Pepaya & Sirsak', category: 'Biopestisida', benefit: 'Mengurangi nafsu makan hama ulat (efek antifeedant)', price: 25000, priceUnit: '500ml'},
+        {id: 29, name: 'Eco Enzyme Multifungsi', category: 'Dekomposer/Mikroba', benefit: 'Penyubur daun dan penjernih air irigasi dari limbah organik', price: 20000, priceUnit: 'liter'},
+        {id: 30, name: 'Pseudomonas fluorescens', category: 'Agen Hayati', benefit: 'Melindungi akar dari penyakit layu bakteri dan busuk batang', price: 55000, priceUnit: 'liter'},
+        {id: 31, name: 'Pupuk Kompos Daun Bambu', category: 'Pupuk Organik Padat', benefit: 'Kaya akan jamur Trichoderma alami dari hutan bambu', price: 20000, priceUnit: 'karung'},
+        {id: 32, name: 'POC Daun Kelor (Moringa)', category: 'Pupuk Organik Cair', benefit: 'Mengandung ZPT (Zat Pengatur Tumbuh) alami tingkat tinggi', price: 35000, priceUnit: 'liter'},
+        {id: 33, name: 'Lem Perangkap Serangga (Glumon)', category: 'Alat & Kebutuhan', benefit: 'Lem tahan air untuk jebakan hama', price: 40000, priceUnit: '100g'},
+        {id: 34, name: 'Ekstrak Akar Tuba (Derris)', category: 'Biopestisida', benefit: 'Racun kontak organik untuk membasmi hama ulat keras', price: 45000, priceUnit: '250ml'},
+        {id: 35, name: 'Rhizobium (Inokulan Legum)', category: 'Agen Hayati', benefit: 'Mengikat nitrogen bebas dari udara khusus untuk tanaman kacang', price: 35000, priceUnit: '100g'},
+        {id: 36, name: 'Pupuk Organik Granul (POG)', category: 'Pupuk Organik Padat', benefit: 'Alternatif NPK kimia dengan pelepasan nutrisi perlahan', price: 80000, priceUnit: '10kg'},
+        {id: 37, name: 'POC Buah Maja', category: 'Pupuk Organik Cair', benefit: 'Menyediakan unsur hara mikro dan memperkuat jaringan sel', price: 30000, priceUnit: 'liter'},
+        {id: 38, name: 'Pestisida Ekstrak Biji Mahoni', category: 'Biopestisida', benefit: 'Penolak hama berspektrum luas untuk sayuran', price: 35000, priceUnit: '500ml'},
+        {id: 39, name: 'Petrogenol (Atraktan Lalat Buah)', category: 'Alat & Kebutuhan', benefit: 'Memancing lalat buah jantan masuk ke dalam perangkap botol', price: 10000, priceUnit: 'vial'},
+        {id: 40, name: 'Corynebacterium', category: 'Agen Hayati', benefit: 'Mengendalikan penyakit kresek (Xanthomonas) pada padi', price: 45000, priceUnit: '500g'},
+        {id: 41, name: 'Pupuk Rumput Laut (Seaweed Extract)', category: 'Pupuk Organik Cair', benefit: 'Meningkatkan toleransi tanaman terhadap kekeringan', price: 60000, priceUnit: '500ml'},
+        {id: 42, name: 'Abu Kayu Bakar', category: 'Pembenah Tanah', benefit: 'Sumber silika dan kalium untuk memperkuat batang tanaman', price: 10000, priceUnit: 'karung'},
+        {id: 43, name: 'Minyak Cengkeh (Eugenol)', category: 'Biopestisida', benefit: 'Fungisida botani ampuh untuk penyakit bercak daun', price: 70000, priceUnit: '100ml'},
+        {id: 44, name: 'Polybag Biodegradable (Singkong)', category: 'Alat & Kebutuhan', benefit: 'Wadah semai yang bisa hancur sendiri, ramah lingkungan', price: 25000, priceUnit: 'pack'},
+        {id: 45, name: 'Asam Humat (Humic Acid) Murni', category: 'Pembenah Tanah', benefit: 'Meningkatkan Kapasitas Tukar Kation (KTK) pada lahan kritis', price: 85000, priceUnit: 'kg'},
+        {id: 46, name: 'POC Limbah Sayuran Pasar', category: 'Pupuk Organik Cair', benefit: 'Sumber nutrisi vegetatif murah dari hasil sirkular ekonomi', price: 15000, priceUnit: 'liter'},
+        {id: 47, name: 'Pestisida Ekstrak Kenikir', category: 'Biopestisida', benefit: 'Menolak serangan nematoda perusak akar di dalam tanah', price: 25000, priceUnit: '500ml'},
+        {id: 48, name: 'Bakteri Fotosintesis (PSB)', category: 'Agen Hayati', benefit: 'Membantu tanaman memasak makanan meski minim sinar matahari', price: 25000, priceUnit: 'liter'},
+        {id: 49, name: 'Serbuk Cangkang Kepiting (Kitosan)', category: 'Pupuk Organik Padat', benefit: 'Mengaktifkan sistem imun tanaman melawan virus dan jamur', price: 65000, priceUnit: '500g'},
+        {id: 50, name: 'Mulsa Jerami Kering', category: 'Alat & Kebutuhan', benefit: 'Alternatif mulsa plastik untuk menekan gulma dan menjaga air', price: 15000, priceUnit: 'ikat'}
+    ];
+</script>
+</body>
+</html>
